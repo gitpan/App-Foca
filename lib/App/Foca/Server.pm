@@ -34,7 +34,7 @@ Now the question is.. is Foca secure? Well it depends on you. Depends if you
 run it as non-root user and the commands you define. Foca will try to do
 things to protect, for example it will reject all requests that have pipes (|),
 I/O redirection (>, <, <<, >>), additionally the HTTP request will be validated
-before it gets executed via the call of C<validate_request()> (L<App::Foca>
+before it gets executed via the call of C<validate_request()> (L<App::Foca::Server>
 returns true all the time so if you want to add extra functionality please
 create a subclass and re-define the method).
 
@@ -55,11 +55,11 @@ create a subclass and re-define the method).
 
     commands:
         df_path:
-        cmd: '/bin/df {%foca_args%} | tail -n1'
-    uptime:
-        cmd: '/usr/bin/uptime'
-    'true':
-        cmd: '/bin/true'
+            cmd: '/bin/df {%foca_args%} | tail -n1'
+        uptime:
+            cmd: '/usr/bin/uptime'
+        'true':
+            cmd: '/bin/true'
 
 The way the example commands file work is: First it will look if there is a 
 I<commands_dir> key, this key should have a list of directories (that means
@@ -79,6 +79,16 @@ going back to our /usr/local/foo example, you can have this executable
 in your /usr/local directory but also have a I<foo> command defined in 
 I<commands>, the one that is defined in I<commands> will be the one that
 will be used by Foca.
+
+Command parameters are accepted but they should be find or declared in
+the I<Foca-Cmd-Params> HTTP header. L<App::Foca::Client> takes care of
+preparing the header.
+
+Commands can have place-holders, this means that you can define your command
+in the YAML file and the I<real> command can be a combination of pipes. If your
+command needs some parameters then you can use I<{%foca_args%}> and it will
+be replaced with whatever parameters are found in the HTTP header 
+I<Foca-Cmd-Params>.
 
 There are two ways to update the list of commands once the server started: One
 is by obviously restarting it and the other one is via localhost send a
@@ -104,11 +114,11 @@ use App::Foca::Tools::Logger;
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 # Some constants
 use constant {

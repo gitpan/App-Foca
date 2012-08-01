@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               App-Foca
-version:            0.01
+version:            0.02
 abstract:           Foca application - server and client
 author:
     - Pablo Fischer <pablo@yahoo-inc.com>
@@ -23,6 +23,8 @@ requires:
     Time::HiRes:          0
     WWW::Curl::Easy:      0
     YAML::Syck:           0
+resources:
+    repository:  https://github.com/pfischermx/foca-perl
 no_index:
     directory:
         - t
