@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               App-Foca
-version:            0.02
+version:            0.03
 abstract:           Foca application - server and client
 author:
     - Pablo Fischer <pablo@yahoo-inc.com>
@@ -13,6 +13,7 @@ build_requires:
 requires:
     Cache::FastMmap:      0
     Data::Dumper:         0
+    HTTP::Daemon:         0
     HTTP::Response:       0
     HTTP::Status:         0
     IPC::Cmd:             0
